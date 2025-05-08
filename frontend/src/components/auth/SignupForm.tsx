@@ -1,17 +1,17 @@
-
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { toast } from '@/hooks/use-toast';
-import { Eye, EyeOff } from 'lucide-react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { toast } from "@/hooks/use-toast";
+import { Eye, EyeOff } from "lucide-react";
 
 const SignupForm = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -22,32 +22,29 @@ const SignupForm = () => {
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    
+
     try {
       console.log("Attempting signup with:", email);
-      
-      // Sign up the user - we set user_type in the metadata 
-      // even though we have the profiles table as a backup
       const { error, data } = await supabase.auth.signUp({
         email,
         password,
         options: {
           data: {
-            user_type: 'free' // Default to free user
-          }
-        }
+            user_type: "free", // Default to free user
+          },
+        },
       });
-      
+
       if (error) throw error;
-      
+
       console.log("Signup response:", data);
-      
+
       if (data.user) {
         toast({
           title: "Success!",
           description: "Account created successfully. You are now logged in.",
         });
-        navigate('/portfolio/create');
+        navigate("/portfolio/create");
       } else {
         toast({
           title: "Success!",
@@ -70,28 +67,28 @@ const SignupForm = () => {
     <form onSubmit={handleSignUp} className="space-y-4">
       <div className="space-y-2">
         <Label htmlFor="signup-email">Email</Label>
-        <Input 
+        <Input
           id="signup-email"
-          type="email" 
-          placeholder="your@email.com" 
-          value={email} 
-          onChange={(e) => setEmail(e.target.value)} 
-          required 
+          type="email"
+          placeholder="your@email.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
         />
       </div>
-      
+
       <div className="space-y-2">
         <Label htmlFor="signup-password">Password</Label>
         <div className="relative">
-          <Input 
+          <Input
             id="signup-password"
             type={showPassword ? "text" : "password"}
-            placeholder="••••••••" 
-            value={password} 
-            onChange={(e) => setPassword(e.target.value)} 
-            required 
+            placeholder="••••••••"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
           />
-          <button 
+          <button
             type="button"
             className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
             onClick={togglePasswordVisibility}
@@ -104,20 +101,24 @@ const SignupForm = () => {
           Password must be at least 6 characters
         </p>
       </div>
-      
+
       <div className="pt-2">
-        <Button 
-          type="submit" 
-          className="w-full" 
-          disabled={loading}
-        >
-          {loading ? 'Signing up...' : 'Sign Up'}
+        <Button type="submit" className="w-full" disabled={loading}>
+          {loading ? "Signing up..." : "Sign Up"}
         </Button>
       </div>
 
       <div className="text-xs text-center text-muted-foreground mt-4 space-y-2">
         <p>By signing up, you agree to our:</p>
-        <p><a href="#" className="underline">Terms of Service</a> and <a href="#" className="underline">Privacy Policy</a></p>
+        <p>
+          <a href="#" className="underline">
+            Terms of Service
+          </a>{" "}
+          and{" "}
+          <a href="#" className="underline">
+            Privacy Policy
+          </a>
+        </p>
       </div>
     </form>
   );

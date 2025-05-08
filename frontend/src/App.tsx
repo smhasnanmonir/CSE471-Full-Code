@@ -15,6 +15,9 @@ import NotFound from "./pages/NotFound";
 import ResetPassword from "./pages/ResetPassword";
 import Templates from "./pages/Templates";
 import Community from "./pages/Community";
+import Groups from "./pages/Groups";
+import GroupDetail from "./pages/GroupDetail";
+import GroupCreate from "./pages/GroupCreate";
 
 // Admin Routes
 import Admin from "./pages/admin/Admin";
@@ -50,11 +53,10 @@ const App = () => {
               <Route path="/upgrade" element={<Upgrade />} />
               <Route path="/templates" element={<Templates />} />
               <Route path="/community" element={<Community />} />
-              <Route
-                path="/portfolio/:id"
-                element={<SharePortfolio></SharePortfolio>}
-              />
-
+              <Route path="/groups" element={<Groups />} />
+              <Route path="/groups/:groupId" element={<GroupDetail />} />
+              <Route path="/groups/create" element={<GroupCreate />} />
+              <Route path="/portfolio/:id" element={<SharePortfolio />} />
               <Route path="/support" element={<Support />} />
 
               {/* Admin Routes */}
